@@ -11,7 +11,7 @@ module "yamlextractor" {
   filepaths = ["routes/nsg_rules.yaml.", "network/private_endpoints/*.yaml", "network/private_links/config_file.yaml"]
 }
 ```
-Relative path pattern to YAML files:   "folder/../name_of_yaml.yaml" or **"folder/../**.yaml"**
+Relative path pattern to YAML files:   "folder/../name_of_yaml.yaml" or **"folder/../*.yaml"**
 
 If all YAML files within a relative path are to be selected, then use the star notation before format **"*.yaml"** otherwise
 name the file you like to select explicitly (see above).
