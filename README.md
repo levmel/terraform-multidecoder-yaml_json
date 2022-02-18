@@ -13,7 +13,7 @@ module "yamlextractor" {
 ```
 Relative path pattern to YAML files:   "folder/../name_of_yaml.yaml" or **"folder/../**.yaml"**
 
-If all YAML files within a relative path are to be selected, then use the star notation before format *"*.yaml"** otherwise
+If all YAML files within a relative path are to be selected, then use the star notation before format **"*.yaml"** otherwise
 name the file you like to select explicitly (see above).
 
 **WARNING:** Only the relative path must be specified. The path.root should not be passed, but everything after that.
