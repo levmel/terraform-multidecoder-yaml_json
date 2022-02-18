@@ -5,9 +5,9 @@ Access multiple YAML files with their relative paths in one run.
 Place this module in the location where you need to access one or many different YAML files (different paths possible) and pass
 the variable **filepaths** which takes a set of strings of the relative paths of YAML files as an argument. You can change the module name if you want!
 ```
-module "yamlextractor" {
-  source  = "leothereal/yamlextractor/multifile"
-  version = "1.0.0"
+module "yamldecode" {
+  source  = "levmel/yamldecode/multiple"
+  version = "0.0.1"
   filepaths = ["routes/nsg_rules.yaml.", "network/private_endpoints/*.yaml", "network/private_links/config_file.yaml"]
 }
 ```
