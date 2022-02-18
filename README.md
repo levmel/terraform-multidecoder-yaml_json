@@ -19,7 +19,7 @@ name the file you like to select explicitly (see above).
 **WARNING:** Only the relative path must be specified. The path.root should not be passed, but everything after that.
 
 ## Access YAML entries
-You can access afterwords all entries within a YAML file like that: **"module.yamlextractor.files.nsg_rules.entry"** or **"module.yamlextractor.files.config_file.entry"**. 
+Now you can access all entries within all the YAML files you've selected like that: **"module.yamlextractor.files.nsg_rules.entry"** or **"module.yamlextractor.files.config_file.entry"**. 
 Explanation of entry access: Before you write your **".entry"** you have to write the file name you like to access. (see filepaths)
 
 
