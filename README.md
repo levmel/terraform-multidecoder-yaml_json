@@ -77,7 +77,7 @@ main.tf
 module "multiyamldecode" {
   source  = "levmel/yamldecode/multiple"
   version = "0.0.4"
-  filepaths = ["routes/nsg_rules.yml", "services/logging/application_insights.yml"]
+  filepaths = ["routes/nsg_rules.yml", "services/logging/monitoring.yml"]
 }
 
 output "nsg_rules_entry" {
