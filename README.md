@@ -11,7 +11,7 @@ module "multiyamldecode" {
   filepaths = ["routes/nsg_rules.yml.", "network/private_endpoints/*.yml", "network/private_links/config_file.yml"]
 }
 ```
-Relative path pattern to YAML files:   **"folder/../name_of_yaml.yaml"** or **"folder/../*.yaml"**
+Relative path pattern to YAML files:   **"folder/../name_of_yaml.yml"** or **"folder/../*.yml"**
 
 If all YAML files within a relative path are to be selected, then use the star notation before format **"*.yml"** otherwise
 name the file you like to select explicitly (see above).
