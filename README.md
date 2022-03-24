@@ -5,7 +5,7 @@ Access multiple YAML files with their relative paths in one run.
 Place this module in the location where you need to access one or multiple different YAML files (different paths possible) and pass
 your path/-s in the parameter **filepaths** which takes a set of strings of the relative paths of YAML files as an argument. You can change the module name if you want!
 ```
-module "multiyamldecode" {
+module "yamldecode" {
   source  = "levmel/yamldecode/multiple"
   version = "0.0.4"
   filepaths = ["routes/nsg_rules.yml.", "network/private_endpoints/*.yml", "network/private_links/config_file.yml"]
@@ -19,8 +19,8 @@ name the file you like to select explicitly (see above).
 **WARNING:** Only the relative path must be specified. The path.root (it is included in the module by default) should not be passed, but everything after it.
 
 ## Access YAML entries
-Now you can access all entries within all the YAML files you've selected like that: **"module.multiyamldecode.files.[name of your YAML file].entry"**. If the name of your YAML file is "config" then access it as follows **"module.multiyamldecode.files.config.[the field name you like to access]"**
-**"module.multiyamldecode.files.config_file.entry"**.
+Now you can access all entries within all the YAML files you've selected like that: **"module.yamldecode.files.[name of your YAML file].entry"**. If the name of your YAML file is "config" then access it as follows **"module.yamldecode.files.config.[the field name you like to access]"**
+**"module.yamldecode.files.config_file.entry"**.
 
 
 ## Example of multiple YAML file accesses from different paths (directories)
@@ -74,18 +74,18 @@ application_insights:
 
 main.tf
 ```
-module "multiyamldecode" {
+module "yamldecode" {
   source  = "levmel/yamldecode/multiple"
   version = "0.0.4"
   filepaths = ["routes/nsg_rules.yml", "services/logging/monitoring.yml"]
 }
 
 output "nsg_rules_entry" {
-  value = module.multiyamldecode.files.nsg_rules.aks.ssh.source_address_prefix
+  value = module.yamldecode.files.nsg_rules.aks.ssh.source_address_prefix
 }
 
 output "application_insights_entry" {
-  value = module.multiyamldecode.files.monitoring.application_insights.daily_data_cap_in_gb
+  value = module.yamldecode.files.monitoring.application_insights.daily_data_cap_in_gb
 }
 ```
 
