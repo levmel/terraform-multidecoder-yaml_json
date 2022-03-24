@@ -50,7 +50,7 @@ aks:
     destination_address_prefix: "*"
 ```
 ### second YAML file:
-services/logging/application_insights.yml
+services/logging/monitoring.yml
 ```
 application_insights:
   application_type: other
@@ -75,7 +75,7 @@ application_insights:
 main.tf
 ```
 module "multiyamldecode" {
-  source  = "leothereal/yamlextractor/multifile"
+  source  = "levmel/yamldecode/multiple"
   version = "0.0.4"
   filepaths = ["routes/nsg_rules.yml", "services/logging/application_insights.yml"]
 }
@@ -85,7 +85,7 @@ output "nsg_rules_entry" {
 }
 
 output "application_insights_entry" {
-  value = module.multiyamldecode.files.application_insights.daily_data_cap_in_gb
+  value = module.multiyamldecode.files.monitoring.application_insights.daily_data_cap_in_gb
 }
 ```
 
