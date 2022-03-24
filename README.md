@@ -53,7 +53,7 @@ main.tf
 ```
 module "yamlextractor" {
   source  = "leothereal/yamlextractor/multifile"
-  version = "0.0.1"
+  version = "0.0.2"
   filepaths = ["routes/nsg_rules.yaml."]
 }
 
