@@ -7,7 +7,7 @@ the variable **filepaths** which takes a set of strings of the relative paths of
 ```
 module "yamldecode" {
   source  = "levmel/yamldecode/multiple"
-  version = "0.0.1"
+  version = "0.0.2"
   filepaths = ["routes/nsg_rules.yaml.", "network/private_endpoints/*.yaml", "network/private_links/config_file.yaml"]
 }
 ```
