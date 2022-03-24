@@ -7,7 +7,7 @@ the variable **filepaths** which takes a set of strings of the relative paths of
 ```
 module "yamldecode" {
   source  = "levmel/yamldecode/multiple"
-  version = "0.0.2"
+  version = "0.0.3"
   filepaths = ["routes/nsg_rules.yaml.", "network/private_endpoints/*.yaml", "network/private_links/config_file.yaml"]
 }
 ```
@@ -53,7 +53,7 @@ main.tf
 ```
 module "yamlextractor" {
   source  = "leothereal/yamlextractor/multifile"
-  version = "0.0.2"
+  version = "0.0.3"
   filepaths = ["routes/nsg_rules.yaml."]
 }
 
