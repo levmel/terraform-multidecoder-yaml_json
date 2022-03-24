@@ -19,8 +19,8 @@ name the file you like to select explicitly (see above).
 **WARNING:** Only the relative path must be specified. The path.root (it is included in the module by default) should not be passed, but everything after it.
 
 ## Access YAML entries
-Now you can access all entries within all the YAML files you've selected like that: **"module.yamlextractor.files.[name of your YAML file].entry"**. If the name of your YAML file is "config" then access it as follows **"module.yamlextractor.files.config.[the field name you like to access]"**
-**"module.yamlextractor.files.config_file.entry"**.
+Now you can access all entries within all the YAML files you've selected like that: **"module.multiyamldecode.files.[name of your YAML file].entry"**. If the name of your YAML file is "config" then access it as follows **"module.multiyamldecode.files.config.[the field name you like to access]"**
+**"module.multiyamldecode.files.config_file.entry"**.
 
 
 ## Example of multiple YAML file accesses from different paths (directories)
