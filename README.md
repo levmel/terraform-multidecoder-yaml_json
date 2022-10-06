@@ -12,11 +12,11 @@ module "yamldecode" {
 }
 ```
 
-Patterns to access YAML files from relative paths:
+### Patterns to access YAML files from relative paths:
 
 To be able to access all YAML files in a folder structure use this ```"folder/../*.yaml"``` or ```"folder/../*.yml"```.
 
-To be able to access a specific YAML file in a folder structure use this ```"folder/../name_of_yaml.yaml"```
+To be able to access a specific YAML file in a folder structure use this ```"folder/../name_of_yaml.yaml"``` or ```"folder/../name_of_yaml.yml"```
 
 If you like to select all YAML files within a folder, then you should use **"*.yml"** or **"*.yaml"** format notation. (see above in the USAGE section)
 
