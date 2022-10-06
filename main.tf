@@ -10,7 +10,7 @@ terraform {
 }
 
 variable "filepaths" {
-  description = "Set of strings of relative YAML paths including their file extension."
+  description = "Set of strings of relative YAML and/or JSON paths including their file extension."
   type        = set(string)
 }
 
@@ -20,7 +20,7 @@ data "local_file" "yaml" {
 }
 
 output "files" {
-  description = "Contents of the YAML files."
+  description = "Contents of the YAML and/or JSON files."
   value = {for i, file in data.local_file.yaml : element(split("/", trim(file.filename, ".yaml .json")), length(split("/", trim(file.filename, ".yaml .json")))-1) => 
   try(yamldecode(join("", split("---", file.content))), {})}
 }
