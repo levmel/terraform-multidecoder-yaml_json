@@ -2,19 +2,24 @@
 Access multiple YAML files with their relative paths in one run.
 
 ## Usage
-Place this module in the location where you need to access one or multiple different YAML files (different paths possible) and pass
+Place this module in the location where you need to access multiple different YAML files (different paths possible) and pass
 your path/-s in the parameter **filepaths** which takes a set of strings of the relative paths of YAML files as an argument. You can change the module name if you want!
 ```
 module "yamldecode" {
   source  = "levmel/yamldecode/multiple"
   version = "0.0.4"
-  filepaths = ["routes/nsg_rules.yml.", "network/private_endpoints/*.yml", "network/private_links/config_file.yml"]
+  filepaths = ["routes/nsg_rules.yml.", "network/private_endpoints/*.yaml", "network/private_links/config_file.yml", "network/private_endpoints/*.yml"]
 }
 ```
-Relative path pattern to YAML files:   **"folder/../name_of_yaml.yml"** or **"folder/../*.yml"**
 
-If all YAML files within a relative path are to be selected, then use the star notation before format **"*.yml"** otherwise
-name the file you like to select explicitly (see above).
+Patterns to access YAML files from relative paths:
+
+To be able to access all YAML files in a folder structure use this ```"folder/../*.yaml"``` or ```"folder/../*.yml"```.
+
+To be able to access a specific YAML file in a folder structure use this ```"folder/../name_of_yaml.yaml"```
+
+If you like to select all YAML files within a folder, then you should use **"*.yml"** or **"*.yaml"** format notation. (see above in the USAGE section)
+
 
 **WARNING:** Only the relative path must be specified. The path.root (it is included in the module by default) should not be passed, but everything after it.
 
