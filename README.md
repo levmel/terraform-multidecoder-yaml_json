@@ -7,7 +7,7 @@ your path/-s in the parameter **filepaths** which takes a set of strings of the 
 ```
 module "yamldecode" {
   source  = "levmel/yamldecode/multiple"
-  version = "0.0.4"
+  version = "0.1.0"
   filepaths = ["routes/nsg_rules.yml.", "network/private_endpoints/*.yaml", "network/private_links/config_file.yml", "network/private_endpoints/*.yml"]
 }
 ```
