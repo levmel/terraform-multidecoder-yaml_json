@@ -1,58 +1,60 @@
-# terraform-multiple-yamldecode
-Access multiple YAML files with their relative paths in one run.
+# terraform-multi-yaml-json-decode
+Access multiple YAML and/or JSON files with their relative paths in one step.
 
 ## Usage
-Place this module in the location where you need to access multiple different YAML files (different paths possible) and pass
-your path/-s in the parameter **filepaths** which takes a set of strings of the relative paths of YAML files as an argument. You can change the module name if you want!
+Place this module in the location where you need to access multiple different YAML and/or JSON files (different paths possible) and pass
+your path/-s in the parameter **filepaths** which takes a set of strings of the relative paths of YAML and/or JSON files as an argument. You can change the module name if you want!
 ```
-module "yamldecode" {
-  source  = "levmel/yamldecode/multiple"
-  version = "0.1.0"
-  filepaths = ["routes/nsg_rules.yml.", "network/private_endpoints/*.yaml", "network/private_links/config_file.yml", "network/private_endpoints/*.yml"]
+module "yaml_json_decode" {
+  source  = "levmel/yaml_json_decode/multi"
+  version = "0.2.0"
+  filepaths = ["routes/nsg_rules.yml", "failover/cosmosdb.json", "network/private_endpoints/*.yaml", "network/private_links/config_file.yml", "network/private_endpoints/*.yml", "pipeline/config/*.json"]
 }
 ```
 
-### Patterns to access YAML files from relative paths:
+### Patterns to access YAML and/or JSON files from relative paths:
 
-To be able to access all YAML files in a folder structure use this ```"folder/../*.yaml"``` or ```"folder/../*.yml"```.
+To be able to access all YAML and/or JSON files in a folder entern your path as follows ```"folder/rest_of_folders/*.yaml"```, ```"folder/rest_of_folders/*.yml"``` or ```"folder/rest_of_folders/*.json"```.
 
-To be able to access a specific YAML file in a folder structure use this ```"folder/../name_of_yaml.yaml"``` or ```"folder/../name_of_yaml.yml"```
+To be able to access a specific YAML and/or a JSON file in a folder structure use this ```"folder/rest_of_folders/name_of_yaml.yaml"```, ```"folder/rest_of_folders/name_of_yaml.yml"``` or ```"folder/rest_of_folders/name_of_yaml.json"```
 
-If you like to select all YAML files within a folder, then you should use **"*.yml"** or **"*.yaml"** format notation. (see above in the USAGE section)
+If you like to select all YAML and/or JSON files within a folder, then you should use **"*.yml"**, **"*.yaml"**, **"*.json"** format notation. (see above in the USAGE section)
 
+### YAML delimiter support is available from version 0.1.0!
 
 **WARNING:** Only the relative path must be specified. The path.root (it is included in the module by default) should not be passed, but everything after it.
 
-## Access YAML entries
-Now you can access all entries within all the YAML files you've selected like that: **"module.yamldecode.files.[name of your YAML file].entry"**. If the name of your YAML file is "config" then access it as follows **"module.yamldecode.files.config.[the field name you like to access]"**
-**"module.yamldecode.files.config_file.entry"**.
+## Access YAML and JSON entries
+Now you can access all entries within all the YAML and/or JSON files you've selected like that: **"module.yamldecode.files.[name of your YAML or JSON file].entry"**. If the name of your YAML or JSON file is "name_of_your_config_file" then access it as follows **"module.yamldecode.files.name_of_your_config_file.entry"**.
 
 
-## Example of multiple YAML file accesses from different paths (directories)
+## Example of multi YAML and JSON file accesses from different paths (directories)
 ### first YAML file:
 routes/nsg_rules.yml
 ```
-aks:
-  rdp:
-    name: rdp
-    priority: 80
-    direction: Inbound
-    access: Allow
-    protocol: Tcp
-    source_port_range: "*"
-    destination_port_range: 3399
-    source_address_prefix: VirtualNetwork
-    destination_address_prefix: "*"
-  ssh:
-    name: ssh
-    priority: 70
-    direction: Inbound
-    access: Allow
-    protocol: Tcp
-    source_port_range: "*"
-    destination_port_range: 24
-    source_address_prefix: VirtualNetwork
-    destination_address_prefix: "*"
+rdp:
+  name: rdp
+  priority: 80
+  direction: Inbound
+  access: Allow
+  protocol: Tcp
+  source_port_range: "*"
+  destination_port_range: 3399
+  source_address_prefix: VirtualNetwork
+  destination_address_prefix: "*"
+  
+---
+  
+ssh:
+  name: ssh
+  priority: 70
+  direction: Inbound
+  access: Allow
+  protocol: Tcp
+  source_port_range: "*"
+  destination_port_range: 24
+  source_address_prefix: VirtualNetwork
+  destination_address_prefix: "*"
 ```
 ### second YAML file:
 services/logging/monitoring.yml
@@ -76,25 +78,57 @@ application_insights:
    - "AppSystemEvents"
    - "AppTraces"
 ```
+### first JSON file:
+test/config/json_history.json
+```
+{
+    "glossary": {
+        "title": "example glossary",
+		"GlossDiv": {
+            "title": "S",
+			"GlossList": {
+                "GlossEntry": {
+                    "ID": "SGML",
+					"SortAs": "SGML",
+					"GlossTerm": "Standard Generalized Markup Language",
+					"Acronym": "SGML",
+					"Abbrev": "ISO 8879:1986",
+					"GlossDef": {
+                        "para": "A meta-markup language, used to create markup languages such as DocBook.",
+						"GlossSeeAlso": ["GML", "XML"]
+                    },
+					"GlossSee": "markup"
+                }
+            }
+        }
+    }
+}
+
+```
 
 main.tf
 ```
-module "yamldecode" {
-  source  = "levmel/yamldecode/multiple"
-  version = "0.0.4"
-  filepaths = ["routes/nsg_rules.yml", "services/logging/monitoring.yml"]
+module "yaml_json_decode" {
+  source  = "levmel/yaml_json_decode/multi"
+  version = "0.2.0"
+  filepaths = ["routes/nsg_rules.yml", "services/logging/monitoring.yml", test/config/*.json]
 }
 
 output "nsg_rules_entry" {
-  value = module.yamldecode.files.nsg_rules.aks.ssh.source_address_prefix
+  value = module.yaml_json_decode.files.nsg_rules.aks.ssh.source_address_prefix
 }
 
 output "application_insights_entry" {
-  value = module.yamldecode.files.monitoring.application_insights.daily_data_cap_in_gb
+  value = module.yaml_json_decode.files.monitoring.application_insights.daily_data_cap_in_gb
+}
+
+output "json_history" {
+  value = module.yaml_json_decode.files.json_history.glossary.title
 }
 ```
 
 ---
 Changes to Outputs:
-  + nsg_rules_entry = "VirtualNetwork"
+  + nsg_rules_entry            = "VirtualNetwork"
   + application_insights_entry = 20
+  + json_history               = "example glossary"
