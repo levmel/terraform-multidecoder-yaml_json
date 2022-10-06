@@ -1,13 +1,13 @@
-# terraform-multi-yaml-json-decode
+# terraform-multidecoder-yaml_json
 Access multiple YAML and/or JSON files with their relative paths in one step.
 
 ## Usage
 Place this module in the location where you need to access multiple different YAML and/or JSON files (different paths possible) and pass
 your path/-s in the parameter **filepaths** which takes a set of strings of the relative paths of YAML and/or JSON files as an argument. You can change the module name if you want!
 ```
-module "yaml_json_decode" {
-  source  = "levmel/yaml_json_decode/multi"
-  version = "0.2.0"
+module "yaml_json_decoder" {
+  source  = "levmel/yaml_json/multidecoder"
+  version = "0.2.1"
   filepaths = ["routes/nsg_rules.yml", "failover/cosmosdb.json", "network/private_endpoints/*.yaml", "network/private_links/config_file.yml", "network/private_endpoints/*.yml", "pipeline/config/*.json"]
 }
 ```
@@ -25,7 +25,7 @@ If you like to select all YAML and/or JSON files within a folder, then you shoul
 **WARNING:** Only the relative path must be specified. The path.root (it is included in the module by default) should not be passed, but everything after it.
 
 ## Access YAML and JSON entries
-Now you can access all entries within all the YAML and/or JSON files you've selected like that: **"module.yamldecode.files.[name of your YAML or JSON file].entry"**. If the name of your YAML or JSON file is "name_of_your_config_file" then access it as follows **"module.yamldecode.files.name_of_your_config_file.entry"**.
+Now you can access all entries within all the YAML and/or JSON files you've selected like that: **"module.yaml_json_decoder.files.[name of your YAML or JSON file].entry"**. If the name of your YAML or JSON file is "name_of_your_config_file" then access it as follows **"module.yaml_json_decoder.files.name_of_your_config_file.entry"**.
 
 
 ## Example of multi YAML and JSON file accesses from different paths (directories)
@@ -108,22 +108,22 @@ test/config/json_history.json
 
 main.tf
 ```
-module "yaml_json_decode" {
-  source  = "levmel/yaml_json_decode/multi"
-  version = "0.2.0"
+module "yaml_json_multidecoder" {
+  source  = "levmel/yaml_json/multidecoder"
+  version = "0.2.1"
   filepaths = ["routes/nsg_rules.yml", "services/logging/monitoring.yml", test/config/*.json]
 }
 
 output "nsg_rules_entry" {
-  value = module.yaml_json_decode.files.nsg_rules.aks.ssh.source_address_prefix
+  value = module.yaml_json_multidecoder.files.nsg_rules.aks.ssh.source_address_prefix
 }
 
 output "application_insights_entry" {
-  value = module.yaml_json_decode.files.monitoring.application_insights.daily_data_cap_in_gb
+  value = module.yaml_json_multidecoder.files.monitoring.application_insights.daily_data_cap_in_gb
 }
 
 output "json_history" {
-  value = module.yaml_json_decode.files.json_history.glossary.title
+  value = module.yaml_json_multidecoder.files.json_history.glossary.title
 }
 ```
 
