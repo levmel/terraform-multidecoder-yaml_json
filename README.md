@@ -18,7 +18,7 @@ To be able to access all YAML and/or JSON files in a folder entern your path as 
 
 To be able to access a specific YAML and/or a JSON file in a folder structure use this ```"folder/rest_of_folders/name_of_yaml.yaml"```, ```"folder/rest_of_folders/name_of_yaml.yml"``` or ```"folder/rest_of_folders/name_of_yaml.json"```
 
-If you like to select all YAML and/or JSON files within a folder, then you should use **"*.yml"**, **"*.yaml"**, **"*.json"** format notation. (see above in the USAGE section)
+If you like to select all YAML and/or JSON files within a folder, then you should use ```"*.yml", "*.yaml", "*.json"``` format notation. (see above in the USAGE section)
 
 ### YAML delimiter support is available from version 0.1.0!
 
