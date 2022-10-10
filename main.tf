@@ -21,6 +21,6 @@ data "local_file" "yaml" {
 
 output "files" {
   description = "Contents of the YAML and/or JSON files."
-  value = {for i, file in data.local_file.yaml : element(split("/", trim(file.filename, ".yaml .json")), length(split("/", trim(file.filename, ".yaml .json")))-1) => 
+  value = {for i, file in data.local_file.yaml_json_standard : element(split("/", replace(file.filename, "/(.yaml|.json|.yml)/", "")), length(split("/", replace(file.filename, "/(.yaml|.json|.yml)/", "")))-1) => 
   try(yamldecode(join("", split("---", file.content))), {})}
 }
