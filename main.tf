@@ -14,7 +14,7 @@ variable "filepaths" {
   type        = set(string)
 }
 
-data "local_file" "yaml" {
+data "local_file" "yaml_json_standard" {
   for_each = toset(flatten([for relative_path in var.filepaths : fileset(path.root, relative_path)]))
   filename = "${path.root}/${each.value}"
 }
