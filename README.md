@@ -1,36 +1,39 @@
 # terraform-multidecoder-yaml_json
-Access multiple YAML and/or JSON files with their relative paths in one step.
+Access multiple YAML and JSON files using their relative paths in a single step.
 
 ## Usage
-Place this module in the location where you need to access multiple different YAML and/or JSON files (different paths possible) and pass
-your path/-s in the parameter **filepaths** which takes a set of strings of the relative paths of YAML and/or JSON files as an argument. You can change the module name if you want!
+Place this module in the location where you need to access multiple YAML and JSON files from various paths. Provide your paths using the **filepaths** parameter, which accepts a set of string values representing the relative paths of the YAML and JSON files. If desired, you can rename the module.
 ```
 module "yaml_json_decoder" {
   source  = "levmel/yaml_json/multidecoder"
-  version = "0.2.1"
+  version = "0.2.3"
   filepaths = ["routes/nsg_rules.yml", "failover/cosmosdb.json", "network/private_endpoints/*.yaml", "network/private_links/config_file.yml", "network/private_endpoints/*.yml", "pipeline/config/*.json"]
 }
 ```
 
-### Patterns to access YAML and/or JSON files from relative paths:
+### Patterns for accessing YAML and JSON files using relative paths::
 
-To be able to access all YAML and/or JSON files in a folder entern your path as follows ```"folder/rest_of_folders/*.yaml"```, ```"folder/rest_of_folders/*.yml"``` or ```"folder/rest_of_folders/*.json"```.
+To access all YAML and JSON files within a folder, structure your path as follows:  
+```"folder/rest_of_folders/*.yaml"```, ```"folder/rest_of_folders/*.yml"``` 
+or ```"folder/rest_of_folders/*.json"```.
 
-To be able to access a specific YAML and/or a JSON file in a folder structure use this ```"folder/rest_of_folders/name_of_yaml.yaml"```, ```"folder/rest_of_folders/name_of_yaml.yml"``` or ```"folder/rest_of_folders/name_of_yaml.json"```
+For specific YAML or JSON files within a directory, use the format: 
+```"folder/rest_of_folders/<name_of_yaml_file>.yaml"```, ```"folder/rest_of_folders/<name_of_yml_file>.yml"``` or ```"folder/rest_of_folders/<name_of_json_file>.json"```
 
-If you like to select all YAML and/or JSON files within a folder, then you should use ```"*.yml", "*.yaml", "*.json"``` format notation. (see above in the USAGE section)
+To select all YAML and JSON files within a folder, use the following format notation:  
+```"*.yml", "*.yaml", "*.json"``` (Refer to the USAGE section above for more details.)
 
-### YAML delimiter support is available from version 0.1.0!
+### Support for YAML delimiters is introduced in version 0.1.0!
 
-**WARNING:** Only the relative path must be specified. The path.root (it is included in the module by default) should not be passed, but everything after it.
+**WARNING:** Specify only the relative path. Do not include the path.root, as it's already incorporated within the module. Instead, provide everything that follows it.
 
-## Access YAML and JSON entries
-Now you can access all entries within all the YAML and/or JSON files you've selected like that: **"module.yaml_json_decoder.files.[name of your YAML or JSON file].entry"**. If the name of your YAML or JSON file is "name_of_your_config_file" then access it as follows **"module.yaml_json_decoder.files.name_of_your_config_file.entry"**.
+## Access YAML and JSON Entries
+You can now access all entries within the selected YAML and JSON files using the format: **"module.yaml_json_decoder.files.[name_of_your_file].entry"**. For instance, if your file is named "name_of_your_config_file", access its entries with **"module.yaml_json_decoder.files.name_of_your_config_file.entry"**.
 
 
-## Example of multi YAML and JSON file accesses from different paths (directories)
+## Example of accessing multiple YAML and JSON files from various directories:
 ### first YAML file:
-routes/nsg_rules.yml
+routes/nsg_rules.yaml
 ```
 rdp:
   name: rdp
@@ -110,8 +113,8 @@ main.tf
 ```
 module "yaml_json_multidecoder" {
   source  = "levmel/yaml_json/multidecoder"
-  version = "0.2.1"
-  filepaths = ["routes/nsg_rules.yml", "services/logging/monitoring.yml", test/config/*.json]
+  version = "0.2.3"
+  filepaths = ["routes/nsg_rules.yaml", "services/logging/monitoring.yml", test/config/*.json]
 }
 
 output "nsg_rules_entry" {
@@ -132,3 +135,8 @@ Changes to Outputs:
   + nsg_rules_entry            = "VirtualNetwork"
   + application_insights_entry = 20
   + json_history               = "example glossary"
+
+
+
+Buy me a coffee on PayPal if you find my code useful and it has made your life easier:
+```levonmelikbekjan@yahoo.de```
