@@ -4,7 +4,7 @@ terraform {
   required_providers {
     local = {
       source  = "hashicorp/local"
-      version = ">= 2.1.0"
+      version = "~> 2.1"
     }
   }
 }
@@ -21,6 +21,7 @@ data "local_file" "yaml_json_standard" {
 
 output "files" {
   description = "Contents of the YAML and/or JSON files."
-  value = {for i, file in data.local_file.yaml_json_standard : element(split("/", replace(file.filename, "/(.yaml|.json|.yml)/", "")), length(split("/", replace(file.filename, "/(.yaml|.json|.yml)/", "")))-1) => 
-  try(yamldecode(join("", split("---", file.content))), {})}
+  value = {for i, file in data.local_file.yaml_json_standard : 
+              element(split(".", replace(basename(file.filename), "\\.(yaml|yml|json)$", "")), 0) => 
+                  try(yamldecode(join("", split("---", file.content))), {})}
 }
