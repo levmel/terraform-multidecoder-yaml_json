@@ -4,11 +4,14 @@ Access multiple YAML and/or JSON files with their relative paths in one step.
 ## Usage
 Place this module in the location where you need to access multiple different YAML and/or JSON files (different paths possible) and pass
 your path/-s in the parameter **filepaths** which takes a set of strings of the relative paths of YAML and/or JSON files as an argument. You can change the module name if you want!
+
+For templating support, add a path to a YAML file containing your variables to the template_variables argument. This will use the Terraform templatefile function - so ${MYVAR} will be replaced by the value of MYVAR. 
 ```
 module "yaml_json_decoder" {
   source  = "levmel/yaml_json/multidecoder"
   version = "0.2.1"
   filepaths = ["routes/nsg_rules.yml", "failover/cosmosdb.json", "network/private_endpoints/*.yaml", "network/private_links/config_file.yml", "network/private_endpoints/*.yml", "pipeline/config/*.json"]
+  template_variables = "variables.yml #optional 
 }
 ```
 
@@ -28,12 +31,20 @@ If you like to select all YAML and/or JSON files within a folder, then you shoul
 Now you can access all entries within all the YAML and/or JSON files you've selected like that: **"module.yaml_json_decoder.files.[name of your YAML or JSON file].entry"**. If the name of your YAML or JSON file is "name_of_your_config_file" then access it as follows **"module.yaml_json_decoder.files.name_of_your_config_file.entry"**.
 
 
-## Example of multi YAML and JSON file accesses from different paths (directories)
+## Example of multi YAML and JSON file accesses from different paths (directories) - including usage of template support 
+
+### var YAML file: 
+variables.yml
+```
+--- 
+project_name: "MyAwesomeProject"
+```
+
 ### first YAML file:
 routes/nsg_rules.yml
 ```
 rdp:
-  name: rdp
+  name: ${project_name}rdp
   priority: 80
   direction: Inbound
   access: Allow
@@ -46,7 +57,7 @@ rdp:
 ---
   
 ssh:
-  name: ssh
+  name: ${project_name}ssh
   priority: 70
   direction: Inbound
   access: Allow
@@ -114,6 +125,10 @@ module "yaml_json_multidecoder" {
   filepaths = ["routes/nsg_rules.yml", "services/logging/monitoring.yml", test/config/*.json]
 }
 
+output "rdp_name" {
+  value = module.yaml_json_multidecoder.files.nsg_rules.rdp.name
+}
+
 output "nsg_rules_entry" {
   value = module.yaml_json_multidecoder.files.nsg_rules.aks.ssh.source_address_prefix
 }
@@ -129,6 +144,7 @@ output "json_history" {
 
 ---
 Changes to Outputs:
+  + rdp_name                   = "MyAwesomeProjectrdp
   + nsg_rules_entry            = "VirtualNetwork"
   + application_insights_entry = 20
   + json_history               = "example glossary"
